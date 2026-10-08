@@ -4,10 +4,11 @@ const mission = "Moon Mission";
 const destination = "Moon";
 
 // ---------- C. Basic resources (variables) ----------
+// Change oxygen and power here to test the 3 situations!
 let oxygen = 100;
 let water = 100;
 let food = 100;
-let power = 100;
+let power = 20;
 
 // ---------- A. Mission status ----------
 let missionStatus = "Not Started";
@@ -37,10 +38,37 @@ function showInfo() {
     statusEl.textContent = missionStatus;
 }
 
+// ---------- Day 02: Resource Check ----------
+// Like a launch checklist: the rocket only goes if every check passes.
+function checkResources() {
+    if (oxygen > 50 && power > 30) {
+        // && means BOTH must be true
+        missionStatus = "Started";
+        statusEl.textContent = missionStatus;
+
+        messageEl.textContent = "Resources: Ready";
+        messageEl.style.color = "green";
+    } else if (oxygen <= 50) {
+        // Oxygen is the problem
+        missionStatus = "Cannot Start ❌";
+        statusEl.textContent = missionStatus;
+
+        messageEl.textContent = "Reason: Not Enough Oxygen";
+        messageEl.style.color = "red";
+    } else {
+        // Oxygen was fine, so power must be 30 or below
+        missionStatus = "Cannot Start ❌";
+        statusEl.textContent = missionStatus;
+
+        messageEl.textContent = "Reason: Not Enough Power";
+        messageEl.style.color = "red";
+    }
+}
+
 // A. Start Mission button
 function startMission() {
-    missionStatus = "Mission Started";
-    statusEl.textContent = missionStatus;
+    // The button now asks the checklist instead of starting right away
+    checkResources();
     console.log("Mission Status: " + missionStatus);
 }
 
